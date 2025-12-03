@@ -1,0 +1,6 @@
+=== Suma y Reducción: CPU vs GPU (CUDA) ===
+[GPU] Suma (kernel only) -> Promedio: 0.0126608 ms
+[GPU] Suma (kernel only) -> Promedio: 0.027877 ms
+[GPU] Suma (kernel only) -> Promedio: 0.375234 ms
+[GPU] Suma (kernel only) -> Promedio: 2.506630 ms
+[GPU] Suma (kernel only) -> Promedio: 21.246800 ms

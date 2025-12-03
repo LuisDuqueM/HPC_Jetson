@@ -1,0 +1,90 @@
+=== Suma y Reducción: CPU vs GPU (CUDA) ===
+
+Memoria disponible aproximada en host: 8.66 GB
+
+--------------------------------------------------
+N = 10000 elementos
+Memoria host requerida (3 vectores float): 117.19 KB
+[CPU] Suma -> Promedio: 0.0944162 ms, Desv. estándar: 0.000553218 ms
+[CPU] Reducción C -> Promedio: 0.0680329 ms, Desv. estándar: 0.000308663 ms (sumaC = 85.5121)
+Memoria device requerida (3 vectores float): 117.19 KB
+[GPU] Suma (kernel only) -> Promedio: 0.0126608 ms
+[GPU] Reducción C (kernel only) -> Promedio: 0.0330048 ms, sumaC = 85.5121
+Verificación CPU:
+  sum(A)_cpu = 9.726493
+  sum(B)_cpu = 75.785591
+  sum(C)_cpu = 85.512084
+  sum(C)_cpu - (sum(A)_cpu + sum(B)_cpu) = 0.000001  (debería ser cercano a 0)
+Comparación GPU vs CPU (reducción C):
+  sum(C)_gpu = 85.512084
+  sum(C)_gpu - sum(C)_cpu = 0.000000  (debería ser cercano a 0)
+
+--------------------------------------------------
+N = 100000 elementos
+Memoria host requerida (3 vectores float): 1.14 MB
+[CPU] Suma -> Promedio: 0.702845 ms, Desv. estándar: 0.056203 ms
+[CPU] Reducción C -> Promedio: 0.475428 ms, Desv. estándar: 0.013221 ms (sumaC = -384.079458)
+Memoria device requerida (3 vectores float): 1.14 MB
+[GPU] Suma (kernel only) -> Promedio: 0.027877 ms
+[GPU] Reducción C (kernel only) -> Promedio: 0.222499 ms, sumaC = -384.079458
+Verificación CPU:
+  sum(A)_cpu = -357.288677
+  sum(B)_cpu = -26.790787
+  sum(C)_cpu = -384.079458
+  sum(C)_cpu - (sum(A)_cpu + sum(B)_cpu) = 0.000006  (debería ser cercano a 0)
+Comparación GPU vs CPU (reducción C):
+  sum(C)_gpu = -384.079458
+  sum(C)_gpu - sum(C)_cpu = 0.000000  (debería ser cercano a 0)
+
+--------------------------------------------------
+N = 1000000 elementos
+Memoria host requerida (3 vectores float): 11.44 MB
+[CPU] Suma -> Promedio: 6.551142 ms, Desv. estándar: 0.069911 ms
+[CPU] Reducción C -> Promedio: 4.676497 ms, Desv. estándar: 0.020915 ms (sumaC = 1084.029690)
+Memoria device requerida (3 vectores float): 11.44 MB
+[GPU] Suma (kernel only) -> Promedio: 0.375234 ms
+[GPU] Reducción C (kernel only) -> Promedio: 1.519936 ms, sumaC = 1084.029690
+Verificación CPU:
+  sum(A)_cpu = 52.638307
+  sum(B)_cpu = 1031.391391
+  sum(C)_cpu = 1084.029690
+  sum(C)_cpu - (sum(A)_cpu + sum(B)_cpu) = -0.000008  (debería ser cercano a 0)
+Comparación GPU vs CPU (reducción C):
+  sum(C)_gpu = 1084.029690
+  sum(C)_gpu - sum(C)_cpu = 0.000000  (debería ser cercano a 0)
+
+--------------------------------------------------
+N = 10000000 elementos
+Memoria host requerida (3 vectores float): 114.44 MB
+[CPU] Suma -> Promedio: 65.991912 ms, Desv. estándar: 0.175381 ms
+[CPU] Reducción C -> Promedio: 46.810091 ms, Desv. estándar: 0.118013 ms (sumaC = -1815.451122)
+Memoria device requerida (3 vectores float): 114.44 MB
+[GPU] Suma (kernel only) -> Promedio: 2.506630 ms
+[GPU] Reducción C (kernel only) -> Promedio: 10.485395 ms, sumaC = -1815.451122
+Verificación CPU:
+  sum(A)_cpu = -80.108736
+  sum(B)_cpu = -1735.342370
+  sum(C)_cpu = -1815.451122
+  sum(C)_cpu - (sum(A)_cpu + sum(B)_cpu) = -0.000016  (debería ser cercano a 0)
+Comparación GPU vs CPU (reducción C):
+  sum(C)_gpu = -1815.451122
+  sum(C)_gpu - sum(C)_cpu = 0.000000  (debería ser cercano a 0)
+
+--------------------------------------------------
+N = 100000000 elementos
+Memoria host requerida (3 vectores float): 1.12 GB
+[CPU] Suma -> Promedio: 661.899783 ms, Desv. estándar: 1.137433 ms
+[CPU] Reducción C -> Promedio: 467.355626 ms, Desv. estándar: 1.581678 ms (sumaC = 671.437244)
+Memoria device requerida (3 vectores float): 1.12 GB
+[GPU] Suma (kernel only) -> Promedio: 21.246800 ms
+[GPU] Reducción C (kernel only) -> Promedio: 71.115271 ms, sumaC = 671.437244
+Verificación CPU:
+  sum(A)_cpu = -9298.971468
+  sum(B)_cpu = 9970.408543
+  sum(C)_cpu = 671.437244
+  sum(C)_cpu - (sum(A)_cpu + sum(B)_cpu) = 0.000170  (debería ser cercano a 0)
+Comparación GPU vs CPU (reducción C):
+  sum(C)_gpu = 671.437244
+  sum(C)_gpu - sum(C)_cpu = 0.000000  (debería ser cercano a 0)
+
+Experimento finalizado.
