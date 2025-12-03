@@ -1,63 +1,69 @@
 #include <iostream>
 #include <chrono>
-#include "../include/init_data.h" //Importamos la función que creamos para crear los vectores
+#include <vector>
+#include "../include/init_data.h" 
 
-
-// Constantes 
-const int N = 10000000; // Tamaño del vector
-const int FIXED_SEED = 32; //Semilla para garantizar reproducibilidad de resultados.
-
-
+// Semilla constante para reproducibilidad
+const int FIXED_SEED = 32; 
 
 // Función secuencial para sumar dos vectores
-void vec_sum(float * A, float * B, float *C, int n){
-    for (int i = 0; i < n; i++) {
+// Usamos long long para evitar desbordamiento en índices si escalamos mucho
+void vec_sum(float * A, float * B, float *C, long long n){
+    for (long long i = 0; i < n; i++) {
         C[i] = A[i] + B[i];
     }
 }
 
-
 int main() {
-    std::cout << "Comenzando suma de vectores secuencialmente..." << std::endl;
+    std::cout << "=== Benchmark Secuencial (CPU) ===" << std::endl;
 
-    // Asignando memoria para los vectores
-    float *A = new float[N];
-    float *B = new float[N];
-    float *C = new float[N];
+    // Lista de tamaños a evaluar (de 10^4 a 10^8)
+    // 10^8 floats = ~400MB por vector. Total ~1.2GB RAM. Seguro para la Jetson.
+    std::vector<long long> tamaños = {
+        10000,       // 1e4
+        100000,      // 1e5
+        1000000,     // 1e6
+        10000000,    // 1e7
+        100000000    // 1e8
+    };
 
-    // Inicializando la semilla para generación de números aleatorios
-    srand(FIXED_SEED);
+    // Iteramos sobre cada tamaño N
+    for (long long N : tamaños) {
+        
+        std::cout << "\nProcesando N = " << N << " elementos..." << std::endl;
 
-    // Ahora iniciamos los vectores A y B con los datos de la función del .h
-    i_vector(A, N); //Vector A
-    i_vector(B, N); //Vector B
+        // 1. Asignación de memoria dinámica
+        float *A = new float[N];
+        float *B = new float[N];
+        float *C = new float[N];
 
-    // Medimos el tiempo de ejecución de la suma de vectores
-    auto start = std::chrono::high_resolution_clock::now();
+        // 2. Inicialización de datos
+        // Reiniciamos la semilla en cada iteración para consistencia
+        srand(FIXED_SEED);
+        
+        // Llenamos los vectores usando la función compartida
+        i_vector(A, N); 
+        i_vector(B, N); 
 
-    // Comenzamos la suma de vectores
-    vec_sum(A, B, C, N);
+        // 3. Medición del tiempo de cómputo
+        auto start = std::chrono::high_resolution_clock::now();
 
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> duration = end - start;
+        vec_sum(A, B, C, N);
 
-    // Mostramos el tiempo de ejecución
-    std::cout << " Elementos " << N << std::endl;
-    std::cout << " Tiempo de ejecución: " << duration.count() << " ms" << std::endl;
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> duration = end - start;
 
-    //Verificamos algunos resultados
-    std::cout << "C[0] = " << C[0] << std::endl;
-    std::cout << "C[N-1] = " << C[N-1] << std::endl;
+        // 4. Reporte de resultados
+        std::cout << "Tiempo CPU: " << duration.count() << " ms" << std::endl;
 
-    // Liberamos la memoria
-    delete[] A;
-    delete[] B;
-    delete[] C;
+        // 5. Liberación de memoria (Crítico para no saturar la RAM en el bucle)
+        delete[] A;
+        delete[] B;
+        delete[] C;
+    }
 
+    std::cout << "\nBenchmark finalizado." << std::endl;
     return 0;
-
-
-
 }
 
 
