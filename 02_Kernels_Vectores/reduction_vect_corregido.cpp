@@ -11,7 +11,7 @@ const int FIXED_SEED=32;
 float reduction_sum(float *A, long long n){
 	float sum = 0.0f;
 	for (long long i=0;i<n;i++){
-		sum += A[i]
+		sum += A[i];
 	}
 	return sum;
 }
@@ -45,7 +45,7 @@ int main(){
 		auto end=std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double,std::milli>duration=end-start;
 		//4.Reporte de resultados
-		std::cout<<"Tiempo CPU: "<<duration.count()<<"ms"<<std:endl;
+		std::cout<<"Tiempo CPU: "<<duration.count()<<"ms"<<std::endl;
 		//5.Liberación de la memoria
 		delete[] A;
 	}
