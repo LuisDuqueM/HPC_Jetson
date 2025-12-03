@@ -1,0 +1,360 @@
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.061154ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.602645ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.15628ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 41.7697ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 367.494ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.111172ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.13194ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.9717ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 64.6531ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 372.98ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.041569ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.408687ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.9037ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 43.8668ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 364.805ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.064834ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.873215ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.69803ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 44.1649ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 364.458ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.061282ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.683416ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.54778ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 41.9004ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 367.364ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.111236ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.13668ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 10.4759ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 75.9946ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 368.898ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.06205ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.623286ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.6906ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 42.6705ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 364.485ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.058242ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.574996ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.16966ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 40.6876ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 364.288ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.1113ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.881408ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 4.04091ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 61.7131ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 366.981ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.110724ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.10676ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.82338ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 58.5097ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 366.236ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.110916ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.1281ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 7.40327ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 65.5388ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 368.106ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.104804ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.445776ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 3.84641ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 61.3935ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 368.144ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.111748ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.13227ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 10.4625ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 76.6072ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 368.955ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.065186ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.644471ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 4.73095ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 42.5756ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 368.037ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.053154ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.407439ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 4.41811ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 58.5503ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 371.912ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.05533ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.25448ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 10.0903ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 60.2509ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 369.875ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.110852ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.10766ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 6.72258ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 59.8914ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 370.876ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.06509ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 0.643959ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.84181ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 41.5717ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 364.372ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.111204ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.13649ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 5.49124ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 58.1205ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 366.108ms
+
+Benchmark finalizado. 
+=== Benchmark Secuencial (CPU) ===
+
+Procesando N = 10000elementos...
+Tiempo CPU: 0.110916ms
+
+Procesando N = 100000elementos...
+Tiempo CPU: 1.12762ms
+
+Procesando N = 1000000elementos...
+Tiempo CPU: 8.62658ms
+
+Procesando N = 10000000elementos...
+Tiempo CPU: 62.4313ms
+
+Procesando N = 100000000elementos...
+Tiempo CPU: 368.446ms
+
+Benchmark finalizado. 
