@@ -5,12 +5,7 @@
 //   - CPU (versión secuencial)
 //   - GPU (versión paralela con CUDA)
 //
-// Incluye:
-//   - Inicialización reproducible con std::mt19937.
-//   - Medición de tiempos CPU (std::chrono).
-//   - Medición de tiempos GPU (cudaEvent_t).
-//   - Comparación de resultados CPU vs GPU.
-//   - Comentarios detallados en español.
+
 
 #include <iostream>
 #include <vector>
@@ -52,7 +47,7 @@
 const uint32_t FIXED_SEED = 32u;
 
 // Número de repeticiones para promediar tiempos
-const int REPS = 5;
+const int REPS = 20;
 
 // ---------------------------------------------------------
 // Utilidades de memoria (host)
@@ -99,9 +94,8 @@ std::string human_readable_bytes(uint64_t bytes) {
     return oss.str();
 }
 
-// ---------------------------------------------------------
 // Inicialización reproducible (host)
-// ---------------------------------------------------------
+
 
 void init_vector_random(std::vector<float>& v,
     std::mt19937& rng,
@@ -113,9 +107,7 @@ void init_vector_random(std::vector<float>& v,
     }
 }
 
-// ---------------------------------------------------------
 // CPU: suma de vectores y reducción
-// ---------------------------------------------------------
 
 void vec_sum_cpu(const std::vector<float>& A,
     const std::vector<float>& B,
@@ -150,9 +142,9 @@ double stddev(const std::vector<double>& x, double mu) {
     return std::sqrt(s / static_cast<double>(x.size()));
 }
 
-// ---------------------------------------------------------
+
 // GPU: kernels de suma y reducción
-// ---------------------------------------------------------
+
 
 // Kernel de suma de vectores:
 // Cada hilo procesa un índice: C[idx] = A[idx] + B[idx]
@@ -214,9 +206,10 @@ void reduce_sum_kernel(const float* data,
     }
 }
 
-// ---------------------------------------------------------
+
+
 // Host: funciones helper para GPU
-// ---------------------------------------------------------
+
 
 // Lanza el kernel de suma de vectores en la GPU y mide su tiempo (solo kernel)
 double run_vec_sum_gpu(const float* dA,
@@ -312,9 +305,8 @@ double run_reduce_sum_gpu(const float* dData,
     return avg_ms;
 }
 
-// ---------------------------------------------------------
 // main: orquesta CPU + GPU
-// ---------------------------------------------------------
+
 int main() {
     std::cout << "=== Suma y Reducción: CPU vs GPU (CUDA) ===\n\n";
 
@@ -378,7 +370,7 @@ int main() {
         std::cout << "[CPU] Suma -> Promedio: " << mu_cpu_sum
             << " ms, Desv. estándar: " << sd_cpu_sum << " ms\n";
 
-        // ---------------- CPU: reducción ----------------
+        //  CPU: reducción 
 
         std::vector<double> tiempos_cpu_red;
         tiempos_cpu_red.reserve(REPS);
@@ -400,9 +392,9 @@ int main() {
             << " ms, Desv. estándar: " << sd_cpu_red
             << " ms (sumaC = " << sumaC_cpu_ultima << ")\n";
 
-        // --------------------------------------------------
+        
         // GPU: reserva de memoria y copia de datos
-        // --------------------------------------------------
+    
 
         float* dA = nullptr, * dB = nullptr, * dC = nullptr;
 
@@ -419,9 +411,9 @@ int main() {
         CUDA_CHECK(cudaMemcpy(dA, hA.data(), bytes_each, cudaMemcpyHostToDevice));
         CUDA_CHECK(cudaMemcpy(dB, hB.data(), bytes_each, cudaMemcpyHostToDevice));
 
-        // --------------------------------------------------
+        
         // GPU: suma de vectores
-        // --------------------------------------------------
+        
 
         double avg_ms_gpu_sum = run_vec_sum_gpu(dA, dB, dC, N, REPS);
 
@@ -431,9 +423,9 @@ int main() {
         // Si queremos comparar resultados numéricos, copiamos C de device a host
         CUDA_CHECK(cudaMemcpy(hC.data(), dC, bytes_each, cudaMemcpyDeviceToHost));
 
-        // --------------------------------------------------
+        
         // GPU: reducción de C
-        // --------------------------------------------------
+        
 
         double sumaC_gpu = 0.0;
         double avg_ms_gpu_red = run_reduce_sum_gpu(dC, N, REPS, sumaC_gpu);
@@ -441,9 +433,9 @@ int main() {
         std::cout << "[GPU] Reducción C (kernel only) -> Promedio: "
             << avg_ms_gpu_red << " ms, sumaC = " << sumaC_gpu << "\n";
 
-        // --------------------------------------------------
+        
         // Comparación CPU vs GPU (numérica)
-        // --------------------------------------------------
+        
 
         double sumaA_cpu = reduce_sum_cpu(hA);
         double sumaB_cpu = reduce_sum_cpu(hB);
@@ -465,9 +457,9 @@ int main() {
         std::cout << "  sum(C)_gpu - sum(C)_cpu = "
             << diff_gpu_cpu << "  (debería ser cercano a 0)\n\n";
 
-        // --------------------------------------------------
+        
         // Liberar memoria en device
-        // --------------------------------------------------
+        
         CUDA_CHECK(cudaFree(dA));
         CUDA_CHECK(cudaFree(dB));
         CUDA_CHECK(cudaFree(dC));
@@ -476,3 +468,4 @@ int main() {
     std::cout << "Experimento finalizado.\n";
     return 0;
 }
+
