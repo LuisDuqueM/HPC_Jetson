@@ -4,12 +4,10 @@
 //   - CPU (versión secuencial)
 //   - GPU (CUDA, en paralelo)
 //
-// El código mide tiempos por etapa:
+// mide tiempos por etapa:
 //   - CPU: suma y reducción.
 //   - GPU: H->D, kernel suma, kernel reducción, D->H, total aproximado.
-// Además calcula speedups y escribe un CSV para graficar.
 //
-// MUY importante: compilar como proyecto CUDA, x64, Release.
 
 #include <iostream>
 #include <vector>
@@ -30,9 +28,9 @@
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 
-// ---------------------------------------------------------
-// Macro para revisar errores de CUDA
-// ---------------------------------------------------------
+
+// para revisar errores de CUDA
+
 #define CUDA_CHECK(call)                                                       \
     do {                                                                       \
         cudaError_t err__ = (call);                                            \
@@ -43,18 +41,14 @@
         }                                                                      \
     } while (0)
 
-// ---------------------------------------------------------
 // Parámetros globales
-// ---------------------------------------------------------
 
 const uint32_t FIXED_SEED = 32u;  // semilla fija para reproducibilidad
 const int REPS = 5;              // repeticiones para promediar tiempos
 
-// ---------------------------------------------------------
 // Utilidades de memoria (host)
-// ---------------------------------------------------------
 
-// Estima memoria física disponible en host (en bytes)
+//  memoria física disponible en host 
 uint64_t get_available_memory_bytes() {
 #ifdef _WIN32
     MEMORYSTATUSEX st;
@@ -95,10 +89,8 @@ std::string human_readable_bytes(uint64_t bytes) {
     oss << std::fixed << std::setprecision(2) << val << " " << suf[i];
     return oss.str();
 }
-
-// ---------------------------------------------------------
 // Inicialización reproducible (host)
-// ---------------------------------------------------------
+
 
 void init_vector_random(std::vector<float>& v,
     std::mt19937& rng,
@@ -110,9 +102,9 @@ void init_vector_random(std::vector<float>& v,
     }
 }
 
-// ---------------------------------------------------------
-// CPU: suma de vectores y reducción
-// ---------------------------------------------------------
+
+// CPU: suma de vectores y reducción (la vamos a ignorar, usaremos nuestra implementación de c++)
+
 
 void vec_sum_cpu(const std::vector<float>& A,
     const std::vector<float>& B,
@@ -147,9 +139,8 @@ double stddev(const std::vector<double>& x, double mu) {
     return std::sqrt(s / static_cast<double>(x.size()));
 }
 
-// ---------------------------------------------------------
+
 // GPU: kernels de suma y reducción
-// ---------------------------------------------------------
 
 // Kernel de suma de vectores: C[idx] = A[idx] + B[idx]
 __global__
@@ -164,7 +155,6 @@ void vec_sum_kernel(const float* A,
 }
 
 // Kernel de reducción (suma) por bloques.
-// data: vector de entrada en device
 // blockSums: 1 valor por bloque (parcial)
 // N: tamaño total
 __global__
@@ -198,11 +188,11 @@ void reduce_sum_kernel(const float* data,
     }
 }
 
-// ---------------------------------------------------------
-// Host: helpers para medir kernels en GPU
-// ---------------------------------------------------------
 
-// Mide tiempo promedio del kernel de suma en GPU (solo kernel, no copias)
+// Host para medir kernels en GPU
+
+
+// Mide tiempo promedio del kernel de suma en GPU (solo kernel)
 double run_vec_sum_gpu(const float* dA,
     const float* dB,
     float* dC,
@@ -215,7 +205,7 @@ double run_vec_sum_gpu(const float* dA,
     CUDA_CHECK(cudaEventCreate(&start));
     CUDA_CHECK(cudaEventCreate(&stop));
 
-    // Warm-up
+    // Warm-up lo ocupamos para que "caliente"/"despierte" el sistema
     vec_sum_kernel << <gridSize, blockSize >> > (dA, dB, dC, N);
     CUDA_CHECK(cudaDeviceSynchronize());
 
@@ -274,7 +264,7 @@ double run_reduce_sum_gpu(const float* dData,
     CUDA_CHECK(cudaEventElapsedTime(&ms, start, stop));
     double avg_ms = static_cast<double>(ms) / static_cast<double>(reps);
 
-    // Copiamos sumas parciales al host
+    // Copiamos las sumas parciales al host
     CUDA_CHECK(cudaMemcpy(hBlockSums.data(),
         dBlockSums,
         gridSize * sizeof(double),
@@ -292,9 +282,9 @@ double run_reduce_sum_gpu(const float* dData,
     return avg_ms;
 }
 
-// ---------------------------------------------------------
-// main: orquesta CPU + GPU y genera CSV
-// ---------------------------------------------------------
+
+// main: CPU + GPU y genera CSV
+
 int main() {
     std::cout << "=== Suma y Reducción: CPU vs GPU (CUDA) ===\n\n";
 
@@ -361,7 +351,7 @@ int main() {
         std::cout << "[CPU] Suma -> Promedio: " << mu_cpu_sum
             << " ms, Desv. estándar: " << sd_cpu_sum << " ms\n";
 
-        // ---------------- CPU: reducción ----------------
+        //  CPU reducción (igual lo ignoraremos,usaremos la que hicimos en C++)
         std::vector<double> tiempos_cpu_red;
         tiempos_cpu_red.reserve(REPS);
         double sumaC_cpu_ultima = 0.0;
@@ -382,9 +372,9 @@ int main() {
             << " ms, Desv. estándar: " << sd_cpu_red
             << " ms (sumaC = " << sumaC_cpu_ultima << ")\n";
 
-        // --------------------------------------------------
-        // GPU: reserva de memoria y copias H->D (medidas)
-        // --------------------------------------------------
+        
+        // GPU: reserva memoria y copias H->D (medidas)
+        
         float* dA = nullptr, * dB = nullptr, * dC = nullptr;
 
         uint64_t bytes_each = static_cast<uint64_t>(N) * sizeof(float);
@@ -418,24 +408,24 @@ int main() {
 
         std::cout << "[GPU] H->D (A,B): " << h2d_ms << " ms\n";
 
-        // --------------------------------------------------
+        
         // GPU: suma de vectores (kernel)
-        // --------------------------------------------------
+        
         double avg_ms_gpu_sum = run_vec_sum_gpu(dA, dB, dC, N, REPS);
         std::cout << "[GPU] Suma (kernel only) -> Promedio: "
             << avg_ms_gpu_sum << " ms\n";
 
-        // --------------------------------------------------
+        
         // GPU: reducción de C (kernel)
-        // --------------------------------------------------
+        
         double sumaC_gpu = 0.0;
         double avg_ms_gpu_red = run_reduce_sum_gpu(dC, N, REPS, sumaC_gpu);
         std::cout << "[GPU] Reducción C (kernel only) -> Promedio: "
             << avg_ms_gpu_red << " ms, sumaC = " << sumaC_gpu << "\n";
 
-        // --------------------------------------------------
+        
         // GPU: copia D->H (C) para comparar numéricamente
-        // --------------------------------------------------
+        
         CUDA_CHECK(cudaEventRecord(evt_d2h_start));
 
         CUDA_CHECK(cudaMemcpy(hC.data(), dC, bytes_each, cudaMemcpyDeviceToHost));
@@ -455,9 +445,9 @@ int main() {
         CUDA_CHECK(cudaEventDestroy(evt_d2h_start));
         CUDA_CHECK(cudaEventDestroy(evt_d2h_stop));
 
-        // --------------------------------------------------
-        // Comparación CPU vs GPU (numérica)
-        // --------------------------------------------------
+        
+        // Comparación de CPU vs GPU 
+        
         double sumaA_cpu = reduce_sum_cpu(hA);
         double sumaB_cpu = reduce_sum_cpu(hB);
         double sumaC_cpu = reduce_sum_cpu(hC);  // C ya viene de GPU, pero debería ser igual a CPU
@@ -477,9 +467,9 @@ int main() {
         std::cout << "  sum(C)_gpu - sum(C)_cpu = "
             << diff_gpu_cpu << " (debería ser cercano a 0)\n";
 
-        // --------------------------------------------------
+        
         // Speedups y total GPU
-        // --------------------------------------------------
+        
         double cpu_total_ms = mu_cpu_sum + mu_cpu_red;
         double total_gpu_ms = h2d_ms + avg_ms_gpu_sum + avg_ms_gpu_red + d2h_ms;
 
@@ -500,9 +490,9 @@ int main() {
         std::cout << "  speedup reducción (kernel) = " << speedup_red_kernel << "\n";
         std::cout << "  speedup total GPU          = " << speedup_total_gpu << "\n\n";
 
-        // --------------------------------------------------
+        
         // Escribir línea CSV
-        // --------------------------------------------------
+        
         fout << std::fixed << std::setprecision(6);
         fout << N << ","
             << mu_cpu_sum << ","
@@ -526,3 +516,4 @@ int main() {
     std::cout << "Experimento finalizado. Resultados en 'resultados_tiempos.csv'.\n";
     return 0;
 }
+
